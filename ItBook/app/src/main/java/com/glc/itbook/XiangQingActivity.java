@@ -12,40 +12,41 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 public class XiangQingActivity extends AppCompatActivity {
-private TextView shuming;
-private TextView zuozhe;
-private TextView jianjie;
-private TextView liulanqi;
+private TextView pinming;
+private TextView peiliao;
+private TextView jiage;
+private TextView fenliang;
 private ImageView imgXiangqing;
- private    String down;
+private ImageView fanhui;
+private String down;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiang_qing);
-        shuming=findViewById(R.id.tv_shuming);
-        zuozhe=findViewById(R.id.tv_zuozhe);
-        jianjie=findViewById(R.id.tv_jianjie);
-        liulanqi=findViewById(R.id.tv_liulanqi);
+        pinming=findViewById(R.id.tv_pinming);
+        peiliao=findViewById(R.id.tv_peiliao);
+        jiage=findViewById(R.id.tv_jiage);
+        fenliang=findViewById(R.id.tv_fenliang);
         imgXiangqing=findViewById(R.id.img_imgXiangQing);
-        Intent intent=getIntent();
-        String name = intent.getStringExtra("name");
-        String author = intent.getStringExtra("author");
-        String jianjieStr= intent.getStringExtra("jianjie");
-        down = intent.getStringExtra("down");
-        String imgStr = intent.getStringExtra("img");
-        shuming.setText("书名："+name);
-        zuozhe.setText("作者："+author);
-        jianjie.setText("简介："+jianjieStr);
-        liulanqi.setText("下载链接："+down);
-        Glide.with(XiangQingActivity.this).load(imgStr).into(imgXiangqing);
-        liulanqi.setOnClickListener(new View.OnClickListener() {
+        fanhui=findViewById(R.id.img_fanhuiAdd);
+        fanhui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1=new Intent(Intent.ACTION_VIEW);
-                intent1.setData(Uri.parse(down));
-                startActivity(intent1);
+                finish();
             }
         });
+        Intent intent=getIntent();
+        String name = intent.getStringExtra("name");
+        int price = intent.getIntExtra("price",0);
+        int weight= intent.getIntExtra("weight",0);
+        String ingredient = intent.getStringExtra("ingredient");
+        String imgStr = intent.getStringExtra("img");
+        pinming.setText("品名："+name);
+        peiliao.setText("配料："+ingredient);
+        jiage.setText("价格："+price+"元");
+        fenliang.setText("分量："+weight+"人份");
+
+        Glide.with(XiangQingActivity.this).load(imgStr).into(imgXiangqing);
     }
 
 }

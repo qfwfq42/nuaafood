@@ -70,8 +70,8 @@ public class EditPasswdActivity extends AppCompatActivity{
                     } else {
                         JSONObject jsonObject = new JSONObject();
                         try {
-                            jsonObject.put("username", username);
-                            jsonObject.put("password", oldpassword);
+                            jsonObject.put("userName", username);
+                            jsonObject.put("userPassword", oldpassword);
                             jsonObject.put("newpassword", password);
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -47,12 +47,16 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences =getSharedPreferences("data",Context.MODE_PRIVATE);
         String userstr= sharedPreferences.getString("username","");
         String phonestr= sharedPreferences.getString("phone","");
+        String userid= sharedPreferences.getString("userid","");
+        String registertime= sharedPreferences.getString("registertime","");
         if(userstr.equals("")){
 
         }else {
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             intent.putExtra("username", userstr);
             intent.putExtra("phone", phonestr);
+            intent.putExtra("userid", userid);
+            intent.putExtra("registertime", registertime);
             startActivity(intent);
         }
         Intent intent = getIntent();
@@ -69,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", usernameStr);
-                        jsonObject.put("password", passwordStr);
+                        jsonObject.put("userName", usernameStr);
+                        jsonObject.put("userPassword", passwordStr);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -86,13 +90,16 @@ public class LoginActivity extends AppCompatActivity {
                                 if (msg.equals("登录成功")) {
 
                                     JSONObject detail = jsonObject.getJSONObject("detail");
-                                    String username = detail.getString("username");
-                                    String phone = detail.getString("phone");
-
+                                    String username = detail.getString("userName");
+                                    String phone = detail.getString("userPhonenumber");
+                                    String userID = detail.getString("userID");
+                                    String regisTime = detail.getString("registerTime");
                                     sharedPreferences=getSharedPreferences("data",Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("username",username);
                                     editor.putString("phone",phone);
+                                    editor.putString("userid",userID);
+                                    editor.putString("registertime",regisTime);
                                     editor.commit();
 
 
@@ -101,8 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("username", username);
                                     intent.putExtra("phone", phone);
                                     startActivity(intent);
-                                } else if (msg.equals("用户名或密码错误")) {
-                                    Toast.makeText(LoginActivity.this, "用户名密码有误", Toast.LENGTH_SHORT).show();
+                                } else if (msg.equals("用户名错误")||msg.equals("密码错误")) {
+                                    if(msg.equals("用户名错误")){
+                                        Toast.makeText(LoginActivity.this, "用户名有误", Toast.LENGTH_SHORT).show();}
+                                    else{
+                                        Toast.makeText(LoginActivity.this, "密码有误", Toast.LENGTH_SHORT).show();}
                                 }
 
                             } catch (JSONException e) {

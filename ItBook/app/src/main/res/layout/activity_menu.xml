@@ -60,7 +60,7 @@
                     android:id="@+id/img_dingdan"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/dingdan"/>
+                    android:src="@drawable/dingdan1"/>
                 <TextView
                     android:id="@+id/tv_dingdan"
                     android:layout_width="40dp"

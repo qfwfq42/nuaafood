@@ -36,4 +36,9 @@ public class UserController {
         return userService.changePasswd(user);
     }
 
+    @PostMapping("/changeInfo")
+    public Result changeInfo(@RequestBody User user){
+        return userService.changeInfo(user);
+    }
+
 }

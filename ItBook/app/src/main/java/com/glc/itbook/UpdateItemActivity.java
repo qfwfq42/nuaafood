@@ -71,7 +71,7 @@ public class UpdateItemActivity extends AppCompatActivity {
         addBookAuthor.setText(author);
         addBookinfo.setText(info);
         addBookLianjie.setText(lianjie);
-       addBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                String name1 = addBookName.getText().toString().trim();

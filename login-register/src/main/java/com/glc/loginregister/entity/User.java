@@ -1,36 +1,34 @@
 package com.glc.loginregister.entity;
 
 public class User {
-    private Long id;
-    private String username;
-    private String password;
-    private String address;
-    private String phone;
+    private Long userID;
+    private String userName;
+    private String userPassword;
+    private String registerTime;
+    private String userPhonenumber;
     private String newpassword;
 
-    public Long getId() {
-        return id;
+    public Long getUserID() {
+        return userID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setUserPassword(String userPassword) { this.userPassword = userPassword; }
 
     public String getNewpassword() {
         return newpassword;
@@ -40,19 +38,19 @@ public class User {
         this.newpassword = newpassword;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUserPhonenumber() {
+        return userPhonenumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUserPhonenumber(String userPhonenumber) {
+        this.userPhonenumber = userPhonenumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getRegisterTime() {
+        return registerTime;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 }

@@ -13,23 +13,23 @@ public interface UserMapper {
 
     /**
      *查看用户名是否已经存在
-     * @param username
+     * @param userName
      * @return
      */
-    @Select("select u.username,u.password from usermessage u where u.username=#{username}")
-    User findUserByName(@Param("username") String username);
+    @Select("select u.userName,u.userPassword from ordinaryuser u where u.userName=#{userName}")
+    User findUserByName(@Param("userName") String userName);
 
 
-    @Select("SELECT * FROM usermessage WHERE id=#{id}")
-    User findUserById(@Param("id") Long id);
+    @Select("SELECT * FROM ordinaryuser WHERE userID=#{userID}")
+    User findUserById(@Param("userID") Long userID);
 
 
     /**
      * 注册
      * @param user
      */
-    @Insert("insert into usermessage values(#{id},#{username},#{password},#{address},#{phone})")
-    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    @Insert("insert into ordinaryuser values(#{userID},#{userName},#{userPassword},#{registerTime},#{userPhonenumber})")
+    @Options(useGeneratedKeys = true,keyProperty = "userID",keyColumn = "userID")
     void register(User user);
 
 
@@ -38,10 +38,13 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Select("select u.id from usermessage u where u.username=#{username} and password=#{password}")
+    @Select("select u.userID from ordinaryuser u where u.userName=#{userName} and userPassword=#{userPassword}")
     Long login(User user);
 
 
-    @Update("update usermessage set password=#{newpassword} where usermessage.username=#{username}")
+    @Update("update ordinaryuser set userPassword=#{newpassword} where ordinaryuser.userName=#{userName}")
     void ChangePasswd(User user);
+
+    @Update("update ordinaryuser set userPhonenumber=#{userPhonenumber} where ordinaryuser.userName=#{userName}")
+    void ChangeInfo(User user);
 }

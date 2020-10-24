@@ -21,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +30,6 @@ public class RegistActivity extends AppCompatActivity {
 private EditText edt_username;
 private EditText edt_password;
 private EditText edt_password2;
-private EditText edt_address;
 private EditText edt_phone;
 private Button goLogin;
 private Button submit;
@@ -39,7 +40,6 @@ private Button submit;
         edt_username=findViewById(R.id.edt_register_username);
         edt_password=findViewById(R.id.edt_register_password);
         edt_password2=findViewById(R.id.edt_register_password2);
-        edt_address=findViewById(R.id.edt_register_address);
         edt_phone=findViewById(R.id.edt_register_phone);
         goLogin=findViewById(R.id.btn_goLogin);
         submit=findViewById(R.id.btn_submit);
@@ -53,9 +53,8 @@ private Button submit;
                 String username = edt_username.getText().toString().trim();
                 String password = edt_password.getText().toString().trim();
                 String password2 = edt_password2.getText().toString().trim();
-                String address = edt_address.getText().toString().trim();
                 String phone = edt_phone.getText().toString().trim();
-                if (username.equals("") || password.equals("") ||password2.equals("") || address.equals("") || phone.equals("")) {
+                if (username.equals("") || password.equals("") ||password2.equals("")  || phone.equals("")) {
                     Toast.makeText(RegistActivity.this, "请填写完整", Toast.LENGTH_SHORT).show();
                 }
                 else if(!password.equals(password2)){
@@ -67,12 +66,15 @@ private Button submit;
                     if (password.length() < 5 || !m.matches()) {
                     Toast.makeText(RegistActivity.this, "密码至少需要6位，且含有字母", Toast.LENGTH_SHORT).show();
                     } else {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
+                        Date date = new Date(System.currentTimeMillis());
+                        String dateStr = simpleDateFormat.format(date);
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", username);
-                        jsonObject.put("password", password);
-                        jsonObject.put("address", address);
-                        jsonObject.put("phone", phone);
+                        jsonObject.put("userName", username);
+                        jsonObject.put("userPassword", password);
+                        jsonObject.put("registerTime", dateStr);
+                        jsonObject.put("userPhonenumber", phone);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -87,7 +89,7 @@ private Button submit;
                                 Toast.makeText(RegistActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 if (msg.equals("注册成功")) {
                                     JSONObject detail = jsonObject.getJSONObject("detail");
-                                    final String username_login = detail.getString("username");
+                                    final String username_login = detail.getString("userName");
                                     goLogin.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {

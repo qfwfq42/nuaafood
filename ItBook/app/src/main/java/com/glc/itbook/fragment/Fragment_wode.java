@@ -32,7 +32,6 @@ public class Fragment_wode extends Fragment {
     private ImageView hBack;
     private ImageView hHead;
     private TextView muser_name;
-    private TextView muser_val;
     private Button tuichu;
 
     private LinearLayout lyBanben;
@@ -53,7 +52,6 @@ public class Fragment_wode extends Fragment {
         hBack=view.findViewById(R.id.h_back);
         hHead=view.findViewById(R.id.h_head);
         muser_name=view.findViewById(R.id.user_name);
-        muser_val=view.findViewById(R.id.user_val);
         tuichu=view.findViewById(R.id.btn_tuichudenglu);
         lyBanben=view.findViewById(R.id.ly_banben);
         lyMima=view.findViewById(R.id.ly_mima);
@@ -71,8 +69,6 @@ public class Fragment_wode extends Fragment {
         final String username = getArguments().getString("username");
         muser_name.setText(username);
         String phone1 = getArguments().getString("phone");
-        String phone = getArguments().getString("phone").replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
-        muser_val.setText(phone);
         lyBanben.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

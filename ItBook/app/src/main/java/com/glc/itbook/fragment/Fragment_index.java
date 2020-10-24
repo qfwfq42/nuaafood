@@ -31,7 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.glc.itbook.R;
 import com.glc.itbook.XiangQingActivity;
-import com.glc.itbook.bean.Book;
+import com.glc.itbook.bean.Food;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -49,7 +49,7 @@ public class Fragment_index extends Fragment {
     private int page = 1;
     private TextView tvCurrentPage;
     private int totalPage;
-    private TextView bookName;
+    private TextView foodName;
     private Button souSuo;
 
 
@@ -69,22 +69,22 @@ public class Fragment_index extends Fragment {
         tvCurrentPage = view.findViewById(R.id.tv_currentPage);
         edtYeMa = view.findViewById(R.id.edt_yema);
         btnTiaozhuan = view.findViewById(R.id.btn_tiaozhuan);
-        bookName=view.findViewById(R.id.edt_bookName);
+        foodName=view.findViewById(R.id.edt_foodName);
         souSuo=view.findViewById(R.id.btn_imgSousuo);
 
 
 
 
-        String bookNameStr = bookName.getText().toString().trim();
-        selectFenYe(bookNameStr,1);
+        String foodNameStr = foodName.getText().toString().trim();
+        selectFenYe(foodNameStr,1);
         //上一页
         tvShangye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (page > 1) {
-                    String bookNameStr = bookName.getText().toString().trim();
+                    String foodNameStr = foodName.getText().toString().trim();
                     try {
-                        String encode = URLEncoder.encode(bookNameStr, "utf-8");
+                        String encode = URLEncoder.encode(foodNameStr, "utf-8");
                         selectFenYe(encode,--page);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -100,7 +100,7 @@ public class Fragment_index extends Fragment {
             @Override
             public void onClick(View view) {
                 if (page < totalPage) {
-                    String bookNameStr = bookName.getText().toString().trim();
+                    String bookNameStr = foodName.getText().toString().trim();
                     try {
                         String encode = URLEncoder.encode(bookNameStr, "utf-8");
                         selectFenYe(encode,++page);
@@ -116,19 +116,22 @@ public class Fragment_index extends Fragment {
         btnTiaozhuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                page = Integer.parseInt(edtYeMa.getText().toString().trim());
-                if (page > 0 && page <= totalPage) {
+                if(edtYeMa.getText().toString().trim().equals("")){
+                    Toast.makeText(getActivity(), "请输入页码", Toast.LENGTH_SHORT).show();
+                }else {
+                    page = Integer.parseInt(edtYeMa.getText().toString().trim());
+                    if (page > 0 && page <= totalPage) {
 
-                    String bookNameStr = bookName.getText().toString().trim();
-                    try {
-                        String encode = URLEncoder.encode(bookNameStr, "utf-8");
-                        selectFenYe(encode,page);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                        String bookNameStr = foodName.getText().toString().trim();
+                        try {
+                            String encode = URLEncoder.encode(bookNameStr, "utf-8");
+                            selectFenYe(encode, page);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "超过最大页数", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "超过最大页数", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -137,7 +140,7 @@ public class Fragment_index extends Fragment {
         souSuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String bookNameStr = bookName.getText().toString().trim();
+                String bookNameStr = foodName.getText().toString().trim();
                 try {
                     String encode = URLEncoder.encode(bookNameStr, "utf-8");
                     selectFenYe(encode,1);
@@ -153,21 +156,21 @@ public class Fragment_index extends Fragment {
     //分页搜索显示的数据 -- 默认显示全部
     private void selectFenYe(String name,int page){
         JSONObject jsonObject = new JSONObject();
-        String url = "http://192.168.1.102:8085/item/findByPageName?name="+name+"&currentPage="+page+"&pageSize=10";
+        String url = "http://192.168.1.102:8085/food/foodfindByPageName?name="+name+"&currentPage="+page+"&pageSize=10";
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
                 Gson gson = new Gson();
-                final Book book = gson.fromJson(jsonObject.toString(), Book.class);
-                int currentPage = book.getCurrentPage();
+                final Food food = gson.fromJson(jsonObject.toString(), Food.class);
+                int currentPage = food.getCurrentPage();
                 tvCurrentPage.setText("第" + currentPage + "页");
-                totalPage = book.getTotalPage();
+                totalPage = food.getTotalPage();
                 adapter = new BaseAdapter() {
                     @Override
                     public int getCount() {
-                        return book.getItems().size();
+                        return food.getFoods().size();
                     }
 
                     @Override
@@ -183,31 +186,28 @@ public class Fragment_index extends Fragment {
                     @Override
                     public View getView(final int i, View view, ViewGroup viewGroup) {
                         view = View.inflate(getContext(), R.layout.item_booklist, null);
-                        ImageView imageView = view.findViewById(R.id.item_image);
-                        TextView name = view.findViewById(R.id.item_bookName);
-                        final TextView user = view.findViewById(R.id.item_bookUser);
-                        TextView info = view.findViewById(R.id.item_bookInfo);
-                        TextView down = view.findViewById(R.id.item_bookDown);
-                        name.setText("书名:"+book.getItems().get(i).getBook_name());
-                        user.setText("作者:"+book.getItems().get(i).getBook_author());
-                        info.setText("简介:"+book.getItems().get(i).getBook_info());
+                        ImageView imageView = view.findViewById(R.id.food_image);
+                        TextView name = view.findViewById(R.id.food_foodName);
+                        final TextView price = view.findViewById(R.id.food_foodPrice);
+                        name.setText("菜名:"+food.getFoods().get(i).getFoodName());
+                        price.setText("价格:"+food.getFoods().get(i).getFoodPrice());
 
                         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Intent intent=new Intent(getActivity(), XiangQingActivity.class);
                                 Bundle bundle=new Bundle();
-                                bundle.putString("name",book.getItems().get(i).getBook_name());
-                                bundle.putString("author",book.getItems().get(i).getBook_author());
-                                bundle.putString("jianjie",book.getItems().get(i).getBook_info());
-                                bundle.putString("down",book.getItems().get(i).getBook_download());
-                                bundle.putString("img",book.getItems().get(i).getBook_img());
+                                bundle.putString("name",food.getFoods().get(i).getFoodName());
+                                bundle.putInt("price",food.getFoods().get(i).getFoodPrice());
+                                bundle.putString("img",food.getFoods().get(i).getFoodPicture());
+                                bundle.putString("ingredient",food.getFoods().get(i).getFoodIngredient());
+                                bundle.putInt("weight",food.getFoods().get(i).getFoodWeight());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
                         });
 
-                        Glide.with(getContext()).load(book.getItems().get(i).getBook_img()).into(imageView);
+                        Glide.with(getContext()).load(food.getFoods().get(i).getFoodPicture()).into(imageView);
 
                         return view;
                     }

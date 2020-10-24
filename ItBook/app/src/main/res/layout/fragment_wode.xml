@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@id/user_line"
-                android:text="183****1234"
+                android:text="用户"
                 android:textColor="@android:color/white"
                 android:textSize="17sp" />
         </RelativeLayout>
