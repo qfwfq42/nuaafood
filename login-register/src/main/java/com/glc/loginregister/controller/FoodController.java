@@ -49,4 +49,5 @@ public class FoodController {
     public PageBean foodsPageByName(String name, int currentPage, int pageSize) {
         return foodService.findFoodByName(name, currentPage, pageSize);
     }
+
 }

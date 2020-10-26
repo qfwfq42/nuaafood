@@ -109,7 +109,7 @@
                 android:layout_marginLeft="50dp"
                 android:textColor="#9F9FA0"
                 android:textColorHint="#9F9FA0"
-                android:numeric="integer"
+                android:inputType="number"
                 android:maxLength="11"
                 android:hint="电话"/>
 

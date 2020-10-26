@@ -70,13 +70,15 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         String phone = intent.getStringExtra("phone");
-
+        String userid = intent.getStringExtra("userid");
+        int userid1 = Integer.parseInt(userid);
         intent.getStringExtra("msg");
         Bundle bundle = new Bundle();
         bundle.putString("username", username);
         bundle.putString("phone", phone);
+        bundle.putInt("userid",userid1);
         fragments.get(3).setArguments(bundle);
-
+        fragments.get(1).setArguments(bundle);
         fragments.get(2).setArguments(bundle);
 
         vp.setOffscreenPageLimit(3);

@@ -1,5 +1,7 @@
 package com.glc.loginregister.entity;
 
+import java.util.Date;
+
 public class Order {
     private Integer orderID;
     private Integer userID;
@@ -7,32 +9,45 @@ public class Order {
     private Integer peopleLimit;
     private String publishPlace;
     private String orderState;
-    private time
+    private Date publishTime;
     public Integer getorderID() { return orderID; }
 
-    public void setorderID( orderID) { this.orderID = orderID; }
+    public void setorderID(Integer orderID) { this.orderID = orderID; }
 
     public Integer getuserID() { return userID; }
 
-    public void setuserID( userID) { this.userID = userID; }
+    public void setuserID(Integer userID) { this.userID = userID; }
 
-    public getpublishTime() { return publishTime; }
+    public Date getpublishTime() { return publishTime; }
 
-    public void setpublishTime( publishTime) { this.publishTime = publishTime; }
+    public void setpublishTime(Date publishTime) { this.publishTime = publishTime; }
 
     public Integer gettimeLimit() { return timeLimit; }
 
-    public void settimeLimit( timeLimit) { this.timeLimit = timeLimit; }
+    public void settimeLimit(Integer timeLimit) { this.timeLimit = timeLimit; }
 
-    public getpublishPlace() { return publishPlace; }
+    public String getpublishPlace() { return publishPlace; }
 
-    public void setpublishPlace( publishPlace) { this.publishPlace = publishPlace; }
+    public void setpublishPlace(String publishPlace) { this.publishPlace = publishPlace; }
 
-    public getorderState() { return orderState; }
+    public String getorderState() { return orderState; }
 
-    public void setorderState( orderState) { this.orderState = orderState; }
+    public void setorderState(String orderState) { this.orderState = orderState; }
 
     public Integer getpeopleLimit() { return peopleLimit; }
 
-    public void setpeopleLimit( peopleLimit) { this.peopleLimit = peopleLimit; }
+    public void setpeopleLimit(Integer peopleLimit) { this.peopleLimit = peopleLimit; }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "orderID=" + orderID +
+                ", userID='" + userID + '\'' +
+                ", timeLimit='" + timeLimit + '\'' +
+                ", peopleLimit='" + peopleLimit + '\'' +
+                ", publishPlace='" + publishPlace + '\'' +
+                ", orderState='" + orderState + '\'' +
+                ", publishTime='" + publishTime + '\'' +
+                '}';
+    }
 }

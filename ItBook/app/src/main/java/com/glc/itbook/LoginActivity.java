@@ -49,9 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         String phonestr= sharedPreferences.getString("phone","");
         String userid= sharedPreferences.getString("userid","");
         String registertime= sharedPreferences.getString("registertime","");
-        if(userstr.equals("")){
-
-        }else {
+        /*
+        {
             Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             intent.putExtra("username", userstr);
             intent.putExtra("phone", phonestr);
@@ -59,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("registertime", registertime);
             startActivity(intent);
         }
+        */
         Intent intent = getIntent();
         final String username1 = intent.getStringExtra("username1");
         login_username.setText(username1);
@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                     intent.putExtra("username", username);
                                     intent.putExtra("phone", phone);
+                                    intent.putExtra("userid",userID);
                                     startActivity(intent);
                                 } else if (msg.equals("用户名错误")||msg.equals("密码错误")) {
                                     if(msg.equals("用户名错误")){

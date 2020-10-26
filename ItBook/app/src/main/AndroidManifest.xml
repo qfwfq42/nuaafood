@@ -17,6 +17,7 @@
         <activity android:name=".UpdateActity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".XiangQingActivity" />
+        <activity android:name=".AddOrderActivity" />
         <activity android:name=".EditInfoActivity" />
         <activity android:name=".EditPasswdActivity" />
         <activity android:name=".MenuActivity"></activity> <!-- 9.0闪退 -->

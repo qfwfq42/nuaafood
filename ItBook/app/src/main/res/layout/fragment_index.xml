@@ -75,7 +75,7 @@
                     android:layout_height="match_parent"
                     android:padding="8dp"
                     android:singleLine="true"
-                    android:numeric="integer"
+                    android:inputType="number"
                     android:background="@drawable/bg_edit"
                     android:textColorHint="#bfbfbf"
                     android:textColor="#000"

@@ -185,7 +185,7 @@ public class Fragment_index extends Fragment {
 
                     @Override
                     public View getView(final int i, View view, ViewGroup viewGroup) {
-                        view = View.inflate(getContext(), R.layout.item_booklist, null);
+                        view = View.inflate(getContext(), R.layout.item_foodlist, null);
                         ImageView imageView = view.findViewById(R.id.food_image);
                         TextView name = view.findViewById(R.id.food_foodName);
                         final TextView price = view.findViewById(R.id.food_foodPrice);
