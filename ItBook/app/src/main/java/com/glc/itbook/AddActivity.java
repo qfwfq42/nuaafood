@@ -83,7 +83,7 @@ private ImageView img;
     }
     private void Add(String name,String img,String author,String info,String lianjie){
         JSONObject jsonObject=new JSONObject();
-       String url="http://192.168.1.102:8085/item/insertItem?book_name="+name+"&book_img="+img+"&book_author="+author+"&book_info="+info+"&book_download="+lianjie+"";
+       String url="http://192.168.1.103:8085/item/insertItem?book_name="+name+"&book_img="+img+"&book_author="+author+"&book_info="+info+"&book_download="+lianjie+"";
         RequestQueue requestQueue= Volley.newRequestQueue(AddActivity.this);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override

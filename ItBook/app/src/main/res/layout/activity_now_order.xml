@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_fanhuiAdd"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/zuojiantou" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="订单详情"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_weizhi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="10dp"
+        android:text="发起位置："
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_zhuangtai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="订单状态："
+        android:layout_marginTop="10dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_shijian1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="发起时间："
+        android:layout_marginTop="10dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_shijian2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="限制时间："
+        android:layout_marginTop="10dp"
+        android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="---拼单情况---"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+    <ListView
+        android:id="@+id/noworder_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#63a219"
+        android:dividerHeight="5px"></ListView></LinearLayout>
+</LinearLayout>

@@ -1,9 +1,6 @@
 package com.glc.loginregister.controller;
 
-import com.glc.loginregister.entity.Item;
-import com.glc.loginregister.entity.Message;
-import com.glc.loginregister.entity.Order;
-import com.glc.loginregister.entity.Res;
+import com.glc.loginregister.entity.*;
 import com.glc.loginregister.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -52,6 +49,18 @@ public class OrderController {
         return orderService.listNowOrder(userID);
     }
 
+    @RequestMapping("/orderfindByOID")
+    @ResponseBody
+    public List<Order> orderfindByOID(int orderID){
+        return orderService.findNowOrder(orderID);
+    }
+
+    @RequestMapping("/applyfindByOID")
+    @ResponseBody
+    public List<Apply> applyfindByOID(int orderID){
+        return orderService.applyfindByOID(orderID);
+    }
+
     @RequestMapping("/countnoapply")
     @ResponseBody
     public Message countNoApply(int orderID){
@@ -59,11 +68,37 @@ public class OrderController {
         Message message=new Message();
         if(integer>=1){
             message.setInfo("存在");
-            System.out.println("存在");
             return message;
         }else {
             message.setInfo("不存在");
-            System.out.println("不存在");
+            return message;
+        }
+    }
+
+    @RequestMapping("/agreeapply")
+    @ResponseBody
+    public Message agreeapply(int applyID){
+        Integer integer = orderService.agreeapply(applyID);
+        Message message=new Message();
+        if(integer>=1){
+            message.setInfo("回复成功");
+            return message;
+        }else {
+            message.setInfo("信息有误，请刷新");
+            return message;
+        }
+    }
+
+    @RequestMapping("/rejectapply")
+    @ResponseBody
+    public Message rejectapply(int applyID){
+        Integer integer = orderService.rejectapply(applyID);
+        Message message=new Message();
+        if(integer>=1){
+            message.setInfo("拒绝成功");
+            return message;
+        }else {
+            message.setInfo("信息有误，请刷新");
             return message;
         }
     }

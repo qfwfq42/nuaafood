@@ -153,7 +153,7 @@ public class UpdateActity extends AppCompatActivity {
     //分页搜索显示的数据 -- 默认显示全部
     private  void selectFenYe(String name,int page){
         JSONObject jsonObject = new JSONObject();
-        String url = "http://192.168.1.102:8085/item/findByPageName?name="+name+"&currentPage="+page+"&pageSize=10";
+        String url = "http://192.168.1.103:8085/item/findByPageName?name="+name+"&currentPage="+page+"&pageSize=10";
         RequestQueue requestQueue = Volley.newRequestQueue(UpdateActity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -243,7 +243,7 @@ public class UpdateActity extends AppCompatActivity {
     //删除请求
     private void  deleteInfo(int id){
         JSONObject jsonObject = new JSONObject();
-        String url="http://192.168.1.102:8085/item/deleteItem/?id="+id+"";
+        String url="http://192.168.1.103:8085/item/deleteItem/?id="+id+"";
         RequestQueue requestQueue=Volley.newRequestQueue(UpdateActity.this);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override

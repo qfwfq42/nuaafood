@@ -1,5 +1,4 @@
 package com.glc.itbook.fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,11 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,28 +24,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.glc.itbook.AddActivity;
 import com.glc.itbook.AddOrderActivity;
-import com.glc.itbook.EditPasswdActivity;
 import com.glc.itbook.R;
-import com.glc.itbook.UpdateItemActivity;
-import com.glc.itbook.XiangQingActivity;
-import com.glc.itbook.bean.Food;
+import com.glc.itbook.NowOrderActivity;
 import com.glc.itbook.bean.Order;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class Fragment_order extends Fragment {
 
@@ -70,6 +57,7 @@ public class Fragment_order extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         neworder = view.findViewById(R.id.ly_neworder);
+        historyorder = view.findViewById(R.id.ly_historyorder);
         mlistView = view.findViewById(R.id.noworder_list);
         refresher = view.findViewById(R.id.btn_imgrefresh);
         /*
@@ -82,6 +70,19 @@ public class Fragment_order extends Fragment {
         System.out.println(list.get(1).getpublishPlace());
         System.out.println(list.get(1).getpublishTime());
         */
+        neworder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = getArguments().getString("username");
+                Integer userid = getArguments().getInt("userid");
+                Intent intent=new Intent(getActivity(), AddOrderActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name",username);
+                bundle.putInt("userid",userid);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         neworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +110,7 @@ public class Fragment_order extends Fragment {
 
     private void showOrder(int userid){
         JSONObject jsonObject = new JSONObject();
-        String url = "http://192.168.1.102:8085/order/orderfindByID?userID="+userid;
+        String url = "http://192.168.1.103:8085/order/orderfindByID?userID="+userid;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -139,13 +140,25 @@ public class Fragment_order extends Fragment {
                         TextView faqi = view.findViewById(R.id.order_begintime);
                         TextView dizhi = view.findViewById(R.id.order_beginplace);
                         TextView shijian = view.findViewById(R.id.order_timeleft);
+                        Button xiangqing = view.findViewById(R.id.btn_order_detail);
                         final TextView huifu = view.findViewById(R.id.order_applyexist);
-                        faqi.setText("发布时间:"+ps.get(i).getpublishTime());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");//
+                        String dateStr = simpleDateFormat.format(ps.get(i).getpublishTime());
+                        faqi.setText("发布时间:"+dateStr);
                         dizhi.setText("发布地点:"+ps.get(i).getpublishPlace());
-                        shijian.setText("剩余时间:"+ps.get(i).gettimeLimit());
-
+                        shijian.setText("限制时间:"+ps.get(i).gettimeLimit()+"分钟");
+                        xiangqing.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent=new Intent(getActivity(), NowOrderActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("orderID",ps.get(i).getorderID());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
                         JSONObject jsonObject=new JSONObject();
-                        String url="http://192.168.1.102:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
+                        String url="http://192.168.1.103:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
                             @Override
@@ -154,6 +167,16 @@ public class Fragment_order extends Fragment {
                                     String info1 = jsonObject.getString("info");
                                     if(info1.equals("存在")){
                                         huifu.setText("您有新的拼单申请，点击进行回复 >>>");
+                                        huifu.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent=new Intent(getActivity(), NowOrderActivity.class);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putInt("orderID",ps.get(i).getorderID());
+                                                intent.putExtras(bundle);
+                                                startActivity(intent);
+                                            }
+                                        });
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

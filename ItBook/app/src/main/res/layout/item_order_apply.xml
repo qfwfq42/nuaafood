@@ -21,62 +21,83 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/order_begintime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingTop="10dp"
-                    android:text="发起时间"
-                    android:textSize="25sp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/apply_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingTop="10dp"
+                        android:text="配送位置"
+                        android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/apply_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:maxLines="1"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:text="状态"
+                        android:textColor="#F44336"
+                        android:textSize="25sp" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/order_beginplace"
+                    android:id="@+id/apply_food"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:paddingTop="10dp"
-                    android:text="发单地址"
+                    android:text="配送餐品"
                     android:textSize="25sp" />
                 <TextView
-                    android:id="@+id/order_state"
+                    android:id="@+id/apply_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:paddingTop="10dp"
-                    android:text="最终状态"
+                    android:text="餐品数量"
                     android:textSize="25sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:paddingTop="10dp"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_order_detail"
+                        android:id="@+id/btn_tongyi"
                         android:layout_width="178dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
 
                         android:layout_weight="1"
                         android:background="@drawable/buttonstyle"
-                        android:text="查看详情" />
+                        android:text="同意拼单" />
 
                     <Button
-                        android:id="@+id/btn_delete_order"
+                        android:id="@+id/btn_jujue"
                         android:layout_width="178dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
                         android:layout_weight="1"
                         android:background="@drawable/buttonstyle"
-                        android:text="删除订单"/>
+                        android:text="拒绝拼单"/>
+
 
                 </LinearLayout>
             </LinearLayout>

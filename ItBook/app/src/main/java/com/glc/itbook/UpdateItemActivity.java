@@ -101,7 +101,7 @@ public class UpdateItemActivity extends AppCompatActivity {
 
     private void updateInfo(int id, String book_name, String shutu, String author, String info, String lianjie) {
         JSONObject jsonObject=new JSONObject();
-        String url = "http://192.168.1.102:8085/item/updateItem?id=" + id + "&book_name=" + book_name + "&book_img=" + shutu + "&book_author=" + author + "&book_info=" + info + "&book_download=" + lianjie + "";
+        String url = "http://192.168.1.103:8085/item/updateItem?id=" + id + "&book_name=" + book_name + "&book_img=" + shutu + "&book_author=" + author + "&book_info=" + info + "&book_download=" + lianjie + "";
 
         RequestQueue requestQueue= Volley.newRequestQueue(UpdateItemActivity.this);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {

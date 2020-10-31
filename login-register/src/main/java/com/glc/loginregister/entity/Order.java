@@ -10,33 +10,33 @@ public class Order {
     private String publishPlace;
     private String orderState;
     private Date publishTime;
-    public Integer getorderID() { return orderID; }
+    public Integer getOrderID() { return orderID; }
 
-    public void setorderID(Integer orderID) { this.orderID = orderID; }
+    public void setOrderID(Integer orderID) { this.orderID = orderID; }
 
-    public Integer getuserID() { return userID; }
+    public Integer getUserID() { return userID; }
 
-    public void setuserID(Integer userID) { this.userID = userID; }
+    public void setUserID(Integer userID) { this.userID = userID; }
 
-    public Date getpublishTime() { return publishTime; }
+    public Date getPublishTime() { return publishTime; }
 
-    public void setpublishTime(Date publishTime) { this.publishTime = publishTime; }
+    public void setPublishTime(Date publishTime) { this.publishTime = publishTime; }
 
-    public Integer gettimeLimit() { return timeLimit; }
+    public Integer getTimeLimit() { return timeLimit; }
 
-    public void settimeLimit(Integer timeLimit) { this.timeLimit = timeLimit; }
+    public void setTimeLimit(Integer timeLimit) { this.timeLimit = timeLimit; }
 
-    public String getpublishPlace() { return publishPlace; }
+    public String getPublishPlace() { return publishPlace; }
 
-    public void setpublishPlace(String publishPlace) { this.publishPlace = publishPlace; }
+    public void setPublishPlace(String publishPlace) { this.publishPlace = publishPlace; }
 
-    public String getorderState() { return orderState; }
+    public String getOrderState() { return orderState; }
 
-    public void setorderState(String orderState) { this.orderState = orderState; }
+    public void setOrderState(String orderState) { this.orderState = orderState; }
 
-    public Integer getpeopleLimit() { return peopleLimit; }
+    public Integer getPeopleLimit() { return peopleLimit; }
 
-    public void setpeopleLimit(Integer peopleLimit) { this.peopleLimit = peopleLimit; }
+    public void setPeopleLimit(Integer peopleLimit) { this.peopleLimit = peopleLimit; }
 
     @Override
     public String toString() {

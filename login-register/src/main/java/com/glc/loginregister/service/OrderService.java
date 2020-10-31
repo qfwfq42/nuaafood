@@ -21,6 +21,27 @@ public class OrderService {
         return items;
     }
 
+    public List<Order> findNowOrder(int id){
+        int num = orderMapper.countconapply(id);
+        orderMapper.updateOrderPState(id,num);
+        List<Order> items = orderMapper.findNowOrder(id);
+        return items;
+    }
+
+    public List<Apply> applyfindByOID(int id){
+        List<Apply> items = orderMapper.applyfindByOID(id);
+
+        return items;
+    }
+
+    public Integer agreeapply(int id) {
+        return orderMapper.agreeapply(id);
+    }
+
+    public Integer rejectapply(int id) {
+        return orderMapper.rejectapply(id);
+    }
+
     public Integer addOrder(Order order) {
         return orderMapper.addOrder(order);
     }

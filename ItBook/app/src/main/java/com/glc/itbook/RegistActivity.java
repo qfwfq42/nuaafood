@@ -78,7 +78,7 @@ private Button submit;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String url = "http://192.168.1.102:8085/user/register";
+                    String url = "http://192.168.1.103:8085/user/register";
                     RequestQueue requestQueue = Volley.newRequestQueue(RegistActivity.this);
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                         @Override
