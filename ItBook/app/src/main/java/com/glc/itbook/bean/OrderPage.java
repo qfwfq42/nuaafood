@@ -50,11 +50,11 @@ public class OrderPage{
         this.totalPage = totalPage;
     }
 
-    public List<Order> getFoods() {
+    public List<Order> getOrders() {
         return items;
     }
 
-    public void setFoods(List<Order> items) {
+    public void setOrders(List<Order> items) {
         this.items = items;
     }
 

@@ -1,5 +1,6 @@
 package com.glc.loginregister.mapper;
 
+import com.glc.loginregister.entity.Food;
 import com.glc.loginregister.entity.Order;
 import com.glc.loginregister.entity.Apply;
 import com.glc.loginregister.entity.Res;
@@ -14,19 +15,32 @@ public interface OrderMapper {
     @Select("SELECT count(*) from apply where orderID=#{id} and applyState='noanswer'")
     Integer countnoOrder(int id);
 
+    @Select("SELECT * FROM orders")
+    public List<Order> listOrder();
+
+    @Select("SELECT * FROM orders WHERE publishPlace LIKE '%${value}%'")
+    public List<Order> listOrderByName(String name);
+
     @Select("SELECT COUNT(*)  FROM orders WHERE publishPlace LIKE '%${value}%';")
     Integer countOrderByName(String name);
+
+    @Select("SELECT count(*) from orders")
+    Integer countOrder();
 
     @Insert("INSERT INTO orders (orderID,userID,publishTime,timeLimit,publishPlace,orderState,peopleLimit)\n" +
             "    VALUES(#{orderID},#{userID},#{publishTime},#{timeLimit},#{publishPlace},#{orderState},#{peopleLimit});")
     @Options(useGeneratedKeys = true,keyProperty = "orderID",keyColumn = "orderID")
     Integer addOrder(Order order);
 
+    @Update("update orders set timeLimit=#{timeLimit},peopleLimit=#{peopleLimit} where orderID=#{orderID} and "+
+            "orderState='waiting'")
+    Integer editOrder(int orderID,int timeLimit,int peopleLimit);
+
     @Select("SELECT * FROM orders where userID=#{id} and (orderState='waiting' or orderState='doing')")
     public List<Order> listNowOrder(int id);
 
-    @Select("SELECT * FROM orders where userID=#{id} and (orderState='finished' or orderState='canceled' or orderState='outdated')")
-    public List<Order> listHistoryOrder(int id);
+    @Select("SELECT * FROM orders where orderID=#{id} and (orderState='finished' or orderState='canceled' or orderState='outdated')")
+    public List<Order> findHistoryOrder(int id);
 
     @Select("SELECT * FROM orders where orderID=#{id} and (orderState='waiting' or orderState='doing')")
     public List<Order> findNowOrder(int id);
@@ -54,4 +68,10 @@ public interface OrderMapper {
 
     @Update("update apply set applyState='rejected' where applyID=#{id} and applyState='noanswer'")
     Integer rejectapply(int id);
+
+    @Update("update orders set orderState='canceled' where orderID=#{id} and orderState='waiting'")
+    Integer cancelOrder(int id);
+
+    @Update("update apply,orders set applyState='canceled' where apply.orderID=orders.orderID and (orders.orderState='canceled' or orders.orderState='outdated')")
+    Integer updateApplyState();
 }

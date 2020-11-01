@@ -1,4 +1,6 @@
 package com.glc.itbook.fragment;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,8 +27,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.glc.itbook.AddOrderActivity;
+import com.glc.itbook.EditOrderActivity;
 import com.glc.itbook.R;
 import com.glc.itbook.NowOrderActivity;
+import com.glc.itbook.SearchOrderActivity;
 import com.glc.itbook.bean.Order;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -46,6 +50,7 @@ public class Fragment_order extends Fragment {
     private ListView mlistView;
     private BaseAdapter adapter;
     private Button refresher;
+    private int userid2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,16 +65,6 @@ public class Fragment_order extends Fragment {
         historyorder = view.findViewById(R.id.ly_historyorder);
         mlistView = view.findViewById(R.id.noworder_list);
         refresher = view.findViewById(R.id.btn_imgrefresh);
-        /*
-        String jsonList="[{\"orderID\":1,\"userID\":1,\"timeLimit\":10,\"peopleLimit\":2,\"publishPlace\":\"1\",\"orderState\":\"doing\",\"publishTime\":\"2019-11-11T13:11:11.000+0000\"},{\"orderID\":12,\"userID\":1,\"timeLimit\":5,\"peopleLimit\":2,\"publishPlace\":\"1\",\"orderState\":\"doing\",\"publishTime\":\"2020-10-26T17:19:56.000+0000\"}]";
-        Gson gson1=new Gson();
-        List<Order> list= gson1.fromJson(jsonList, new TypeToken<List<Order>>() {}.getType());
-        System.out.println(list.get(1).getorderID());
-        System.out.println(list.get(1).getuserID());
-        System.out.println(list.get(1).gettimeLimit());
-        System.out.println(list.get(1).getpublishPlace());
-        System.out.println(list.get(1).getpublishTime());
-        */
         neworder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,12 +78,12 @@ public class Fragment_order extends Fragment {
                 startActivity(intent);
             }
         });
-        neworder.setOnClickListener(new View.OnClickListener() {
+        historyorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = getArguments().getString("username");
                 Integer userid = getArguments().getInt("userid");
-                Intent intent=new Intent(getActivity(), AddOrderActivity.class);
+                Intent intent=new Intent(getActivity(), SearchOrderActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("name",username);
                 bundle.putInt("userid",userid);
@@ -100,16 +95,22 @@ public class Fragment_order extends Fragment {
             @Override
             public void onClick(View view) {
                 int userid= getArguments().getInt("userid");
-
                 showOrder(userid);
             }
         });
         int userid= getArguments().getInt("userid");
+        userid2 = userid;
         showOrder(userid);
     }
 
-    private void showOrder(int userid){
-        JSONObject jsonObject = new JSONObject();
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            showOrder(userid2);
+        }}
+
+    private void showOrder(final int userid){
         String url = "http://192.168.1.103:8085/order/orderfindByID?userID="+userid;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
@@ -141,6 +142,8 @@ public class Fragment_order extends Fragment {
                         TextView dizhi = view.findViewById(R.id.order_beginplace);
                         TextView shijian = view.findViewById(R.id.order_timeleft);
                         Button xiangqing = view.findViewById(R.id.btn_order_detail);
+                        Button xiugai = view.findViewById(R.id.btn_edit_order);
+                        Button shanchu = view.findViewById(R.id.btn_delete_order);
                         final TextView huifu = view.findViewById(R.id.order_applyexist);
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");//
                         String dateStr = simpleDateFormat.format(ps.get(i).getpublishTime());
@@ -157,6 +160,71 @@ public class Fragment_order extends Fragment {
                                 startActivity(intent);
                             }
                         });
+                        xiugai.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent=new Intent(getActivity(), EditOrderActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("orderID",ps.get(i).getorderID());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                        shanchu.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                AlertDialog aldg;
+                                AlertDialog.Builder adBd=new AlertDialog.Builder(getActivity());
+                                adBd.setTitle("是否取消？");
+                                adBd.setMessage("确定要取消此订单吗？");
+                                adBd.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        JSONObject jsonObject=new JSONObject();
+                                        String url = "http://192.168.1.103:8085/order/cancelOrder?orderID=" + ps.get(i).getorderID() ;
+
+                                        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
+                                        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject jsonObject) {
+                                                try {
+                                                    String info1 = jsonObject.getString("info");
+                                                    if(info1.equals("取消成功")){
+                                                        Toast.makeText(getActivity(), "取消成功", Toast.LENGTH_SHORT).show();
+                                                    }else {
+                                                        Toast.makeText(getActivity(), "状态已过期，请刷新", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    showOrder(userid);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
+                                                Log.d("错误", volleyError.toString());
+                                                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        requestQueue.add(jsonObjectRequest);
+
+                                    }
+                                });
+                                adBd.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        showOrder(userid);
+                                    }
+                                });
+                                aldg=adBd.create();
+                                aldg.show();
+                            }
+                        });
+                        if(!ps.get(i).getorderState().equals("waiting")){
+                            xiugai.setVisibility(View.INVISIBLE);
+                            shanchu.setVisibility(View.INVISIBLE);
+                        }
                         JSONObject jsonObject=new JSONObject();
                         String url="http://192.168.1.103:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
@@ -190,24 +258,6 @@ public class Fragment_order extends Fragment {
                             }
                         });
                         requestQueue.add(jsonObjectRequest);
-                        /*
-                        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Intent intent=new Intent(getActivity(), XiangQingActivity.class);
-                                Bundle bundle=new Bundle();
-                                bundle.putString("name",food.getFoods().get(i).getFoodName());
-                                bundle.putInt("price",food.getFoods().get(i).getFoodPrice());
-                                bundle.putString("img",food.getFoods().get(i).getFoodPicture());
-                                bundle.putString("ingredient",food.getFoods().get(i).getFoodIngredient());
-                                bundle.putInt("weight",food.getFoods().get(i).getFoodWeight());
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                        });
-                        */
-
-
                         return view;
                     }
                 };

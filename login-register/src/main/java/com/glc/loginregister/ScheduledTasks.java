@@ -17,5 +17,6 @@ public class ScheduledTasks {
     @Scheduled(fixedRate = 30000)
     public void updateOrderState(){
         //orderService.updateOrderState();
+        //orderService.updateApplyState();
     }
 }

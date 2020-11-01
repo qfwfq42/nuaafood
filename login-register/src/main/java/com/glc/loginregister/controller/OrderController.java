@@ -43,6 +43,22 @@ public class OrderController {
         }
     }
 
+    @RequestMapping("/editOrder")
+    @ResponseBody
+    public Message editOrder(int orderID,int timeLimit,int peopleLimit){
+        Integer integer = orderService.editOrder(orderID,timeLimit,peopleLimit);
+        Message message=new Message();
+        if(integer>=1){
+            message.setInfo("修改成功");
+            orderService.updateOrderState();
+            orderService.updateOrderPState(orderID,peopleLimit);
+            return message;
+        }else {
+            message.setInfo("修改失败");
+            return message;
+        }
+    }
+
     @RequestMapping("/orderfindByID")
     @ResponseBody
     public List<Order> orderfindByID(int userID){
@@ -53,6 +69,12 @@ public class OrderController {
     @ResponseBody
     public List<Order> orderfindByOID(int orderID){
         return orderService.findNowOrder(orderID);
+    }
+
+    @RequestMapping("/findHisOrder")
+    @ResponseBody
+    public List<Order> findHisOrder(int orderID){
+        return orderService.findHisOrder(orderID);
     }
 
     @RequestMapping("/applyfindByOID")
@@ -101,6 +123,33 @@ public class OrderController {
             message.setInfo("信息有误，请刷新");
             return message;
         }
+    }
+
+    @RequestMapping("/cancelOrder")
+    @ResponseBody
+    public Message cancelOrder(int orderID){
+        Integer integer = orderService.cancelOrder(orderID);
+        Message message=new Message();
+        if(integer>=1){
+            message.setInfo("取消成功");
+            orderService.updateApplyState();
+            return message;
+        }else {
+            message.setInfo("信息有误，请刷新");
+            return message;
+        }
+    }
+
+    @RequestMapping("/orderfindByPage")
+    @ResponseBody
+    public PageBean foodsPage(int currentPage, int pageSize) {
+        return orderService.findOrderByPage(currentPage, pageSize);
+    }
+
+    @RequestMapping("/orderfindByPageName")
+    @ResponseBody
+    public PageBean foodsPageByName(String name, int currentPage, int pageSize) {
+        return orderService.findOrderByName(name, currentPage, pageSize);
     }
 
     @InitBinder

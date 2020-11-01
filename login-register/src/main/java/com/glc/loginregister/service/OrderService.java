@@ -1,11 +1,14 @@
 package com.glc.loginregister.service;
 
+import com.github.pagehelper.PageHelper;
 import com.glc.loginregister.entity.*;
 import com.glc.loginregister.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
@@ -28,11 +31,18 @@ public class OrderService {
         return items;
     }
 
+    public List<Order> findHisOrder(int id){
+        List<Order> items = orderMapper.findHistoryOrder(id);
+        return items;
+    }
+
     public List<Apply> applyfindByOID(int id){
         List<Apply> items = orderMapper.applyfindByOID(id);
 
         return items;
     }
+
+    public Integer updateOrderPState(int id,int num){return orderMapper.updateOrderPState(id,num);}
 
     public Integer agreeapply(int id) {
         return orderMapper.agreeapply(id);
@@ -46,8 +56,72 @@ public class OrderService {
         return orderMapper.addOrder(order);
     }
 
+    public Integer editOrder(int orderID,int timeLimit,int peopleLimit) {
+        return orderMapper.editOrder(orderID,timeLimit,peopleLimit);
+    }
+
+    public Integer cancelOrder(int id) {
+        return orderMapper.cancelOrder(id);
+    }
+
     public void updateOrderState(){
         orderMapper.updateOrderState();
     }
 
+    public void updateApplyState(){
+        orderMapper.updateApplyState();
+    }
+
+    public PageBean findOrderByPage(Integer currentPage, Integer pageSize) {
+        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        PageHelper.startPage(currentPage, pageSize);
+
+        List<Order> allItems = orderMapper.listOrder();        //全部商品
+        int countNums = orderMapper.countOrder();            //总记录数
+        PageBean<Order> pageBean =new PageBean<>();
+        pageBean.setItems(allItems);//分页结果
+        pageBean.setCurrentPage(currentPage);//当前页
+        pageBean.setPageSize(pageSize);//设置每页显示条数
+        pageBean.setTotalNum(countNums);//设置总条数
+
+
+        //计算分页数
+        int pageConnt=(countNums+pageSize-1)/pageSize;
+        pageBean.setTotalPage(pageConnt);//设置总页数
+        if(currentPage<pageConnt){
+            pageBean.setIsMore(1);
+        }else {
+            pageBean.setIsMore(0);
+        }
+        return pageBean;
+    }
+
+
+    public PageBean findOrderByName(String name,Integer currentPage, Integer pageSize){
+        PageHelper.startPage(currentPage, pageSize);
+        Map param=new HashMap<>();
+        param.put("name",name);
+        System.out.println(name);
+        List<Order> items = orderMapper.listOrderByName(name);
+        int countNums = orderMapper.countOrderByName(name);
+        PageBean<Order> pageBean =new PageBean<>();
+        pageBean.setItems(items);//分页结果
+        pageBean.setCurrentPage(currentPage);//当前页
+        pageBean.setPageSize(pageSize);//设置每页显示条数
+        pageBean.setTotalNum(countNums);//设置总条数
+
+        //计算分页数
+        int pageConnt=(countNums+pageSize-1)/pageSize;
+        pageBean.setTotalPage(pageConnt);//设置总页数
+        if(currentPage<pageConnt){
+            pageBean.setIsMore(1);
+        }else {
+            pageBean.setIsMore(0);
+        }
+        return pageBean;
+    }
+
+    public Integer countOrder() {
+        return orderMapper.countOrder();
+    }
 }
