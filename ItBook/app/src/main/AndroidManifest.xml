@@ -18,12 +18,17 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".XiangQingActivity" />
         <activity android:name=".AddOrderActivity" />
+        <activity android:name=".AddApplyActivity" />
+        <activity android:name=".ListApplyOrderActivity" />
         <activity android:name=".EditOrderActivity" />
+        <activity android:name=".EditApplyActivity" />
         <activity android:name=".EditInfoActivity" />
         <activity android:name=".EditPasswdActivity" />
         <activity android:name=".NowOrderActivity" />
+        <activity android:name=".NowApplyActivity" />
         <activity android:name=".HistoryOrderActivity" />
         <activity android:name=".SearchOrderActivity" />
+        <activity android:name=".SearchApplyActivity" />
         <activity android:name=".MenuActivity"></activity> <!-- 9.0闪退 -->
         <uses-library
             android:name="org.apache.http.legacy"

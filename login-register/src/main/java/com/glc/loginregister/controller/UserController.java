@@ -41,4 +41,8 @@ public class UserController {
         return userService.changeInfo(user);
     }
 
+    @PostMapping("/getUserInfo")
+    public Result getUserInfo(@RequestBody User user){
+        return userService.getUserInfo(user);
+    }
 }

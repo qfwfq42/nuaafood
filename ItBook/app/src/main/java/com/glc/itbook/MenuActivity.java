@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.glc.itbook.fragment.Fragment_dongtai;
+import com.glc.itbook.fragment.Fragment_apply;
 import com.glc.itbook.fragment.Fragment_index;
 import com.glc.itbook.fragment.Fragment_order;
 import com.glc.itbook.fragment.Fragment_wode;
@@ -61,7 +61,7 @@ public class MenuActivity extends AppCompatActivity {
         imgMe = findViewById(R.id.img_me);
         fragments.add(new Fragment_index());
         fragments.add(new Fragment_order());
-        fragments.add(new Fragment_dongtai());
+        fragments.add(new Fragment_apply());
         fragments.add(new Fragment_wode());
 
 

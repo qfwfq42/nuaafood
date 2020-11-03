@@ -93,6 +93,23 @@ public class UserService {
         return result;
     }
 
+    public Result getUserInfo(User user){
+        Result result=new Result();
+        result.setSuccess(false);
+        result.setDetail(null);
+        try {
+            Long userID = user.getUserID();
+            result.setMsg("查询成功");
+            result.setSuccess(true);
+            User userByID = userMapper.findUserById(userID);
+            result.setDetail(userByID);
+        }catch (Exception e){
+            result.setMsg(e.getMessage());
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public Result changeInfo(User user){
         Result result=new Result();
         result.setSuccess(false);
