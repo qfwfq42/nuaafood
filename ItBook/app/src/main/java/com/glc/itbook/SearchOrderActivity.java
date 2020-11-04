@@ -57,9 +57,10 @@ public class SearchOrderActivity extends AppCompatActivity {
         btnTiaozhuan = findViewById(R.id.btn_tiaozhuan);
         orderName=findViewById(R.id.edt_orderName);
         souSuo=findViewById(R.id.btn_imgSousuo);
-
+        Intent intent = getIntent();
+        final Integer userid =  intent.getIntExtra("userid",0);
         String foodNameStr = orderName.getText().toString().trim();
-        selectFenYe(foodNameStr,1);
+        selectFenYe(foodNameStr,userid,1);
         //上一页
         tvShangye.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +69,7 @@ public class SearchOrderActivity extends AppCompatActivity {
                     String orderNameStr = orderName.getText().toString().trim();
                     try {
                         String encode = URLEncoder.encode(orderNameStr, "utf-8");
-                        selectFenYe(encode,--page);
+                        selectFenYe(encode,userid,--page);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -86,7 +87,7 @@ public class SearchOrderActivity extends AppCompatActivity {
                     String orderNameStr = orderName.getText().toString().trim();
                     try {
                         String encode = URLEncoder.encode(orderNameStr, "utf-8");
-                        selectFenYe(encode,++page);
+                        selectFenYe(encode,userid,++page);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -108,7 +109,7 @@ public class SearchOrderActivity extends AppCompatActivity {
                         String orderNameStr = orderName.getText().toString().trim();
                         try {
                             String encode = URLEncoder.encode(orderNameStr, "utf-8");
-                            selectFenYe(encode, page);
+                            selectFenYe(encode,userid, page);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
@@ -126,7 +127,7 @@ public class SearchOrderActivity extends AppCompatActivity {
                 String orderNameStr = orderName.getText().toString().trim();
                 try {
                     String encode = URLEncoder.encode(orderNameStr, "utf-8");
-                    selectFenYe(encode,1);
+                    selectFenYe(encode,userid,1);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -135,9 +136,9 @@ public class SearchOrderActivity extends AppCompatActivity {
         });
     }
 
-    private void selectFenYe(String name,int page){
+    private void selectFenYe(String name, final int userid, int page){
         JSONObject jsonObject = new JSONObject();
-        String url = "http://192.168.1.103:8085/order/orderfindByPageName?name="+name+"&currentPage="+page+"&pageSize=10";
+        String url = "http://192.168.1.103:8085/order/orderfindByPageName?name="+name+"&userID="+userid+"&currentPage="+page+"&pageSize=10";
         RequestQueue requestQueue = Volley.newRequestQueue(SearchOrderActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -186,18 +187,7 @@ public class SearchOrderActivity extends AppCompatActivity {
                         }else if(orderPage.getOrders().get(i).getorderState().equals("outdated")){
                             state.setText("订单状态:已过期");
                         }
-                        /*
-                        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Intent intent=new Intent(SearchOrderActivity.this, HistoryOrderActivity.class);
-                                Bundle bundle=new Bundle();
-                                bundle.putInt("orderID",orderPage.getOrders().get(i).getorderID());
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                        });
-                        */
+
                         btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

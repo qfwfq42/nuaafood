@@ -26,8 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.glc.itbook.EditApplyActivity;
 import com.glc.itbook.EditOrderActivity;
 import com.glc.itbook.ListApplyOrderActivity;
+import com.glc.itbook.NowApplyActivity;
 import com.glc.itbook.R;
 import com.glc.itbook.NowOrderActivity;
 import com.glc.itbook.SearchApplyActivity;
@@ -175,7 +177,7 @@ public class Fragment_apply extends Fragment {
                         xiangqing.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent=new Intent(getActivity(), NowOrderActivity.class);
+                                Intent intent=new Intent(getActivity(), NowApplyActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("applyID",ps.get(i).getApplyID());
                                 intent.putExtras(bundle);
@@ -185,7 +187,7 @@ public class Fragment_apply extends Fragment {
                         xiugai.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent=new Intent(getActivity(), EditOrderActivity.class);
+                                Intent intent=new Intent(getActivity(), EditApplyActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("applyID",ps.get(i).getApplyID());
                                 intent.putExtras(bundle);

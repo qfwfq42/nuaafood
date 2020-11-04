@@ -18,11 +18,13 @@ public interface OrderMapper {
     @Select("SELECT * FROM orders")
     public List<Order> listOrder();
 
-    @Select("SELECT * FROM orders WHERE publishPlace LIKE '%${value}%'")
-    public List<Order> listOrderByName(String name);
+    @Select("SELECT * FROM orders WHERE userID=#{userID} and publishPlace LIKE '%${name}%' and " +
+            "(orderState='finished' or orderState='canceled' or orderState='outdated') order by publishTime desc")
+    public List<Order> listOrderByName(String name,int userID);
 
-    @Select("SELECT COUNT(*)  FROM orders WHERE publishPlace LIKE '%${value}%';")
-    Integer countOrderByName(String name);
+    @Select("SELECT COUNT(*)  FROM orders WHERE userID=#{userID} and publishPlace LIKE '%${name}%' and" +
+            "(orderState='finished' or orderState='canceled' or orderState='outdated');")
+    Integer countOrderByName(String name,int userID);
 
     @Select("SELECT count(*) from orders")
     Integer countOrder();
@@ -41,6 +43,9 @@ public interface OrderMapper {
 
     @Select("SELECT * FROM orders where orderID=#{id} and (orderState='finished' or orderState='canceled' or orderState='outdated')")
     public List<Order> findHistoryOrder(int id);
+
+    @Select("SELECT * FROM orders where orderID=#{id}")
+    public List<Order> findOrder(int id);
 
     @Select("SELECT * FROM orders where orderID=#{id} and (orderState='waiting' or orderState='doing')")
     public List<Order> findNowOrder(int id);

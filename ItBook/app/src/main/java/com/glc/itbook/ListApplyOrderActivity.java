@@ -145,42 +145,6 @@ public class ListApplyOrderActivity extends AppCompatActivity {
                             }
                         });
 
-                        /*
-                        JSONObject jsonObject=new JSONObject();
-                        String url="http://192.168.1.103:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
-                        RequestQueue requestQueue= Volley.newRequestQueue(ListApplyOrderActivity.this);
-                        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                try {
-                                    String info1 = jsonObject.getString("info");
-                                    if(info1.equals("存在")){
-                                        huifu.setText("您有新的拼单申请，点击进行回复 >>>");
-                                        huifu.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent=new Intent(ListApplyOrderActivity.this, NowOrderActivity.class);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putInt("orderID",ps.get(i).getorderID());
-                                                intent.putExtras(bundle);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Log.d("错误", volleyError.toString());
-                                Toast.makeText(ListApplyOrderActivity.this, "网络失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        requestQueue.add(jsonObjectRequest);
-
-                         */
                         return view;
                     }
                 };

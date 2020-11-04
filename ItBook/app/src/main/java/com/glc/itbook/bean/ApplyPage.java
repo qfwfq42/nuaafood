@@ -50,11 +50,11 @@ public class ApplyPage{
         this.totalPage = totalPage;
     }
 
-    public List<Apply> getFoods() {
+    public List<Apply> getApplys() {
         return items;
     }
 
-    public void setFoods(List<Apply> items) {
+    public void setApplys(List<Apply> items) {
         this.items = items;
     }
 

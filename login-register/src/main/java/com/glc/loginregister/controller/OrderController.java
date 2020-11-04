@@ -77,6 +77,12 @@ public class OrderController {
         return orderService.findHisOrder(orderID);
     }
 
+    @RequestMapping("/findOrder")
+    @ResponseBody
+    public List<Order> findOrder(int orderID){
+        return orderService.findOrder(orderID);
+    }
+
     @RequestMapping("/applyfindByOID")
     @ResponseBody
     public List<Apply> applyfindByOID(int orderID){
@@ -142,14 +148,14 @@ public class OrderController {
 
     @RequestMapping("/orderfindByPage")
     @ResponseBody
-    public PageBean foodsPage(int currentPage, int pageSize) {
-        return orderService.findOrderByPage(currentPage, pageSize);
+    public PageBean foodsPage(int currentPage, int userID,int pageSize) {
+        return orderService.findOrderByPage(currentPage, userID,pageSize);
     }
 
     @RequestMapping("/orderfindByPageName")
     @ResponseBody
-    public PageBean foodsPageByName(String name, int currentPage, int pageSize) {
-        return orderService.findOrderByName(name, currentPage, pageSize);
+    public PageBean foodsPageByName(String name, int userID,int currentPage, int pageSize) {
+        return orderService.findOrderByName(name, userID,currentPage, pageSize);
     }
 
     @InitBinder

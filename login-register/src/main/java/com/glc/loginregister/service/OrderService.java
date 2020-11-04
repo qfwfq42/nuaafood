@@ -36,6 +36,11 @@ public class OrderService {
         return items;
     }
 
+    public List<Order> findOrder(int id){
+        List<Order> items = orderMapper.findOrder(id);
+        return items;
+    }
+
     public List<Apply> applyfindByOID(int id){
         List<Apply> items = orderMapper.applyfindByOID(id);
 
@@ -72,7 +77,7 @@ public class OrderService {
         orderMapper.updateApplyState();
     }
 
-    public PageBean findOrderByPage(Integer currentPage, Integer pageSize) {
+    public PageBean findOrderByPage(Integer currentPage, int userID,Integer pageSize) {
         //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
         PageHelper.startPage(currentPage, pageSize);
 
@@ -97,13 +102,13 @@ public class OrderService {
     }
 
 
-    public PageBean findOrderByName(String name,Integer currentPage, Integer pageSize){
+    public PageBean findOrderByName(String name,int userID,Integer currentPage, Integer pageSize){
         PageHelper.startPage(currentPage, pageSize);
         Map param=new HashMap<>();
         param.put("name",name);
         System.out.println(name);
-        List<Order> items = orderMapper.listOrderByName(name);
-        int countNums = orderMapper.countOrderByName(name);
+        List<Order> items = orderMapper.listOrderByName(name,userID);
+        int countNums = orderMapper.countOrderByName(name,userID);
         PageBean<Order> pageBean =new PageBean<>();
         pageBean.setItems(items);//分页结果
         pageBean.setCurrentPage(currentPage);//当前页

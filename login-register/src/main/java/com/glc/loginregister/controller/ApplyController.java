@@ -3,6 +3,7 @@ package com.glc.loginregister.controller;
 import com.glc.loginregister.entity.Apply;
 import com.glc.loginregister.entity.Message;
 import com.glc.loginregister.entity.Order;
+import com.glc.loginregister.entity.PageBean;
 import com.glc.loginregister.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,12 @@ public class ApplyController {
     @ResponseBody
     public List<Apply> applyfindByID(int userID){
         return applyService.applyfindByID(userID);
+    }
+
+    @RequestMapping("/applyfindByAID")
+    @ResponseBody
+    public List<Apply> applyfindByAID(int applyID){
+        return applyService.applyfindByAID(applyID);
     }
 
     @RequestMapping("/listAvailableOrder")
@@ -61,5 +68,17 @@ public class ApplyController {
             message.setInfo("状态已过期，请重试");
             return message;
         }
+    }
+
+    @RequestMapping("/applyfindByPage")
+    @ResponseBody
+    public PageBean foodsPage(int currentPage, int userID,int pageSize) {
+        return applyService.findApplyByPage(currentPage, userID , pageSize);
+    }
+
+    @RequestMapping("/applyfindByPageName")
+    @ResponseBody
+    public PageBean foodsPageByName(String name, int userID,int currentPage, int pageSize) {
+        return applyService.findApplyByName(name, userID ,currentPage, pageSize);
     }
 }

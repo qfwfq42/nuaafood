@@ -27,6 +27,7 @@
         <activity android:name=".NowOrderActivity" />
         <activity android:name=".NowApplyActivity" />
         <activity android:name=".HistoryOrderActivity" />
+        <activity android:name=".HistoryApplyActivity" />
         <activity android:name=".SearchOrderActivity" />
         <activity android:name=".SearchApplyActivity" />
         <activity android:name=".MenuActivity"></activity> <!-- 9.0闪退 -->
