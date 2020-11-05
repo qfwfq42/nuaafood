@@ -25,7 +25,6 @@
         <activity android:name=".EditInfoActivity" />
         <activity android:name=".EditPasswdActivity" />
         <activity android:name=".NowOrderActivity" />
-        <activity android:name=".NowApplyActivity" />
         <activity android:name=".HistoryOrderActivity" />
         <activity android:name=".HistoryApplyActivity" />
         <activity android:name=".SearchOrderActivity" />

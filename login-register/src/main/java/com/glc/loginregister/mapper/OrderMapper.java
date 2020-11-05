@@ -65,6 +65,8 @@ public interface OrderMapper {
     @Select("SELECT COUNT(*) FROM apply WHERE orderID=#{id} and applyState='confirmed'")
     Integer countconapply(int id);
 
+
+
     @Update("update orders set orderState='doing' where orderID=#{id} and peopleLimit<=#{num} and orderState='waiting'")
     Integer updateOrderPState(int id,int num);
 

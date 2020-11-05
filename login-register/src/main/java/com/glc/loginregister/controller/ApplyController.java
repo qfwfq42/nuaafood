@@ -70,6 +70,37 @@ public class ApplyController {
         }
     }
 
+    @RequestMapping("/editApply")
+    @ResponseBody
+    public Message editApply(Apply apply){
+        Message message=new Message();
+        Integer integer = applyService.editApply(apply);
+
+        if(integer>=1){
+            message.setInfo("修改成功");
+            return message;
+        }else {
+            message.setInfo("状态已过期，请重试");
+            return message;
+        }
+    }
+
+    @RequestMapping("/finishApply")
+    @ResponseBody
+    public Message finishApply(int applyID,int OrderID){
+        Message message=new Message();
+        Integer integer = applyService.finishApply(applyID);
+        if(integer>=1){
+            message.setInfo("确认成功");
+            Integer num = applyService.countFiApply(OrderID);
+            applyService.checkUpdateOrder(OrderID,num);
+            return message;
+        }else {
+            message.setInfo("状态已过期，请重试");
+            return message;
+        }
+    }
+
     @RequestMapping("/applyfindByPage")
     @ResponseBody
     public PageBean foodsPage(int currentPage, int userID,int pageSize) {

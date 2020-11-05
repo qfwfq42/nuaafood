@@ -27,11 +27,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.glc.itbook.EditApplyActivity;
-import com.glc.itbook.EditOrderActivity;
+import com.glc.itbook.HistoryApplyActivity;
 import com.glc.itbook.ListApplyOrderActivity;
-import com.glc.itbook.NowApplyActivity;
 import com.glc.itbook.R;
-import com.glc.itbook.NowOrderActivity;
 import com.glc.itbook.SearchApplyActivity;
 import com.glc.itbook.bean.Apply;
 import com.google.gson.Gson;
@@ -177,9 +175,10 @@ public class Fragment_apply extends Fragment {
                         xiangqing.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent=new Intent(getActivity(), NowApplyActivity.class);
+                                Intent intent=new Intent(getActivity(), HistoryApplyActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("applyID",ps.get(i).getApplyID());
+                                bundle.putInt("orderID",ps.get(i).getOrderID());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -190,8 +189,60 @@ public class Fragment_apply extends Fragment {
                                 Intent intent=new Intent(getActivity(), EditApplyActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("applyID",ps.get(i).getApplyID());
+                                bundle.putInt("orderID",ps.get(i).getOrderID());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
+                            }
+                        });
+                        queren.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                AlertDialog aldg;
+                                AlertDialog.Builder adBd=new AlertDialog.Builder(getActivity());
+                                adBd.setTitle("是否已经配送完成？");
+                                adBd.setMessage("确定要确认此拼单申请吗？");
+                                adBd.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        JSONObject jsonObject=new JSONObject();
+                                        String url = "http://192.168.1.103:8085/apply/finishApply?applyID=" + ps.get(i).getApplyID() +"&OrderID=" + ps.get(i).getOrderID() ;
+
+                                        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
+                                        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject jsonObject) {
+                                                try {
+                                                    String info1 = jsonObject.getString("info");
+                                                    if(info1.equals("确认成功")){
+                                                        Toast.makeText(getActivity(), "确认成功", Toast.LENGTH_SHORT).show();
+                                                    }else {
+                                                        Toast.makeText(getActivity(), "状态已过期，请刷新", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    showApply(userid);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
+                                                Log.d("错误", volleyError.toString());
+                                                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        requestQueue.add(jsonObjectRequest);
+
+                                    }
+                                });
+                                adBd.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        showApply(userid);
+                                    }
+                                });
+                                aldg=adBd.create();
+                                aldg.show();
                             }
                         });
                         shanchu.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +256,7 @@ public class Fragment_apply extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         JSONObject jsonObject=new JSONObject();
-                                        String url = "http://192.168.1.103:8085/apply/cancelApply?applyID=" + ps.get(i).getApplyID() ;
+                                        String url = "http://192.168.1.103:8085/apply/cancelApply?applyID=" + ps.get(i).getApplyID();
 
                                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
@@ -245,41 +296,6 @@ public class Fragment_apply extends Fragment {
                                 aldg.show();
                             }
                         });
-                        /*
-                        JSONObject jsonObject=new JSONObject();
-                        String url="http://192.168.1.103:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
-                        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-                        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                try {
-                                    String info1 = jsonObject.getString("info");
-                                    if(info1.equals("存在")){
-                                        huifu.setText("您有新的拼单申请，点击进行回复 >>>");
-                                        huifu.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                Intent intent=new Intent(getActivity(), NowOrderActivity.class);
-                                                Bundle bundle = new Bundle();
-                                                bundle.putInt("orderID",ps.get(i).getorderID());
-                                                intent.putExtras(bundle);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Log.d("错误", volleyError.toString());
-                                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        requestQueue.add(jsonObjectRequest);
-                        */
                         return view;
                     }
                 };

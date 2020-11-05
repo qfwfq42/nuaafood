@@ -24,6 +24,12 @@ public interface ApplyMapper {
     @Select("SELECT count(*) from apply")
     Integer countApply();
 
+    @Select("select count(*) from apply where orderID=#{OrderID} and applyState='finished'")
+    Integer countFiApply(int OrderID);
+
+    @Update("update orders set orderState='finished' where orderID=#{OrderID} and peopleLimit<=#{num} and orderState='doing'")
+    Integer checkUpdateOrder(int OrderID,int num);
+
     @Select("SELECT * FROM apply where userID=#{id} and (applyState='noanswer' or applyState='confirmed') order by applyID desc")
     public List<Apply> applyfindByID(int id);
 
@@ -33,8 +39,15 @@ public interface ApplyMapper {
     @Select("SELECT * FROM orders where userID!=#{userID} and orderState='waiting' order by publishTime desc")
     public List<Order> listAvailableOrder(int userID);
 
-    @Update("update apply set applyState='canceled' where applyState='noanswer'")
+    @Update("update apply set applyState='canceled' where applyID=#{applyID} and applyState='noanswer'")
     public Integer cancelApply(int applyID);
+
+    @Update("update apply set applyState='finished' where applyID=#{applyID} and applyState='confirmed'")
+    public Integer finishApply(int applyID);
+
+    @Update("update apply set applyPlace=#{applyPlace},applyAmount=#{applyAmount},foodName=#{foodName}" +
+            " where applyID=#{applyID} and applyState='noanswer'")
+    public Integer editApply(Apply apply);
 
     @Select("select count(*) from apply where userID=#{userID} and orderID=#{orderID}")
     public Integer checkExist(int userID,int orderID);
