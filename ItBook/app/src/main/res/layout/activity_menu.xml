@@ -95,7 +95,7 @@
                     android:textColor="#F7F7F7"
 
                     android:gravity="center"
-                    android:text="动态"/>
+                    android:text="拼单"/>
             </LinearLayout>
 
         </LinearLayout>

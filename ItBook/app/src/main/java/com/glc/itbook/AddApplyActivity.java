@@ -75,7 +75,7 @@ public class AddApplyActivity extends AppCompatActivity {
     private void Add(int userid,int orderID,String name1,String amount1,String place1){
         JSONObject jsonObject=new JSONObject();
         Date date = new Date();
-        String url="http://192.168.1.103:8085/apply/addApply?userID="+userid+"&orderID="+orderID
+        String url="http://192.168.43.211:8085/apply/addApply?userID="+userid+"&orderID="+orderID
                 +"&foodName="+name1+"&applyAmount="+amount1+"&applyPlace="+place1;
         Log.d("信息",url);
         RequestQueue requestQueue= Volley.newRequestQueue(AddApplyActivity.this);

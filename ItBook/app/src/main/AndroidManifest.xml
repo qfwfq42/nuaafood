@@ -13,9 +13,6 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".BanBenActivity"></activity>
-        <activity android:name=".UpdateItemActivity" />
-        <activity android:name=".UpdateActity" />
-        <activity android:name=".AddActivity" />
         <activity android:name=".XiangQingActivity" />
         <activity android:name=".AddOrderActivity" />
         <activity android:name=".AddApplyActivity" />

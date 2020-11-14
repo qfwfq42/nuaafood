@@ -111,7 +111,7 @@ public class Fragment_order extends Fragment {
         }}
 
     private void showOrder(final int userid){
-        String url = "http://192.168.1.103:8085/order/orderfindByID?userID="+userid;
+        String url = "http://192.168.43.211:8085/order/orderfindByID?userID="+userid;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -181,7 +181,7 @@ public class Fragment_order extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         JSONObject jsonObject=new JSONObject();
-                                        String url = "http://192.168.1.103:8085/order/cancelOrder?orderID=" + ps.get(i).getorderID() ;
+                                        String url = "http://192.168.43.211:8085/order/cancelOrder?orderID=" + ps.get(i).getorderID() ;
 
                                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
@@ -226,7 +226,7 @@ public class Fragment_order extends Fragment {
                             shanchu.setVisibility(View.INVISIBLE);
                         }
                         JSONObject jsonObject=new JSONObject();
-                        String url="http://192.168.1.103:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
+                        String url="http://192.168.43.211:8085/order/countnoapply?orderID="+ps.get(i).getorderID();
                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
                             @Override

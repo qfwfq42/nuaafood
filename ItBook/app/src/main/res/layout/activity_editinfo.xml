@@ -103,7 +103,7 @@
                 android:textColorHint="#BFBFBF"
                 android:hint="默认"
                 android:textColor="#000"
-
+                android:inputType="phone"
                 android:background="@drawable/bg_edit"/>
         </LinearLayout>
 

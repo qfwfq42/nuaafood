@@ -1,20 +1,12 @@
 package com.glc.loginregister.controller;
 
 
-import com.glc.loginregister.entity.Food;
-import com.glc.loginregister.entity.Message;
 import com.glc.loginregister.entity.PageBean;
-import com.glc.loginregister.entity.User;
-import com.glc.loginregister.mapper.ItemMapper;
 import com.glc.loginregister.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/food")

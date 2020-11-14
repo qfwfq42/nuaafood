@@ -77,7 +77,7 @@ public class AddOrderActivity extends AppCompatActivity {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp tdate = new Timestamp(date.getTime());
-        String url="http://192.168.1.103:8085/order/addOrder?userID="+userid+"&publishPlace="+place
+        String url="http://192.168.43.211:8085/order/addOrder?userID="+userid+"&publishPlace="+place
                 +"&timeLimit="+time+"&peopleLimit="+people+"&publishTime="+formatter.format(tdate)+"&orderState=waiting"+"";
         Log.d("信息",url);
         RequestQueue requestQueue= Volley.newRequestQueue(AddOrderActivity.this);

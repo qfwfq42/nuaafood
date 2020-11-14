@@ -75,7 +75,7 @@ public class EditInfoActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        String url = "http://192.168.1.103:8085/user/changeInfo";
+                        String url = "http://192.168.43.211:8085/user/changeInfo";
 
                         RequestQueue requestQueue= Volley.newRequestQueue(EditInfoActivity.this);
                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {

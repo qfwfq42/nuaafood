@@ -138,7 +138,7 @@ public class SearchOrderActivity extends AppCompatActivity {
 
     private void selectFenYe(String name, final int userid, int page){
         JSONObject jsonObject = new JSONObject();
-        String url = "http://192.168.1.103:8085/order/orderfindByPageName?name="+name+"&userID="+userid+"&currentPage="+page+"&pageSize=10";
+        String url = "http://192.168.43.211:8085/order/orderfindByPageName?name="+name+"&userID="+userid+"&currentPage="+page+"&pageSize=10";
         RequestQueue requestQueue = Volley.newRequestQueue(SearchOrderActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override

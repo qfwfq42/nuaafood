@@ -29,9 +29,11 @@ import com.android.volley.toolbox.Volley;
 import com.glc.itbook.EditApplyActivity;
 import com.glc.itbook.HistoryApplyActivity;
 import com.glc.itbook.ListApplyOrderActivity;
+import com.glc.itbook.NowOrderActivity;
 import com.glc.itbook.R;
 import com.glc.itbook.SearchApplyActivity;
 import com.glc.itbook.bean.Apply;
+import com.glc.itbook.bean.Order;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Fragment_apply extends Fragment {
@@ -110,7 +113,7 @@ public class Fragment_apply extends Fragment {
         }}
 
     private void showApply(final int userid){
-        String url = "http://192.168.1.103:8085/apply/applyfindByID?userID="+userid;
+        String url = "http://192.168.43.211:8085/apply/applyfindByID?userID="+userid;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -144,7 +147,7 @@ public class Fragment_apply extends Fragment {
                         Button xiangqing = view.findViewById(R.id.btn_apply_detail);
                         Button xiugai = view.findViewById(R.id.btn_edit_apply);
                         Button shanchu = view.findViewById(R.id.btn_delete_apply);
-                        Button queren = view.findViewById(R.id.btn_finish_apply);
+                        final Button queren = view.findViewById(R.id.btn_finish_apply);
                         mingcheng.setText("餐品名称:"+ps.get(i).getFoodName());
                         shuliang.setText("餐品数量:"+ps.get(i).getApplyAmount());
                         dizhi.setText("配送地址:"+ps.get(i).getApplyPlace());
@@ -171,6 +174,29 @@ public class Fragment_apply extends Fragment {
                             queren.setVisibility(View.INVISIBLE);
                             zhuangtai.setText("被取消");
                         }
+
+                        String url = "http://192.168.43.211:8085/order/orderfindByOID?orderID="+ps.get(i).getOrderID();
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray jsonElements) {
+                                Gson gson = new Gson();
+                                List<Order> aa = gson.fromJson(jsonElements.toString(), new TypeToken<List<Order>>(){}.getType());
+                                if (aa.size()>0) {
+                                    if(aa.get(0).getorderState().equals("waiting")&&ps.get(i).getApplyState().equals("confirmed")){
+                                        queren.setVisibility(View.INVISIBLE);
+                                    }
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                System.out.println(volleyError);
+                                Toast.makeText(getActivity(), "网络出错", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        );
+                        requestQueue.add(jsonArrayRequest);
 
                         xiangqing.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -205,7 +231,7 @@ public class Fragment_apply extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         JSONObject jsonObject=new JSONObject();
-                                        String url = "http://192.168.1.103:8085/apply/finishApply?applyID=" + ps.get(i).getApplyID() +"&OrderID=" + ps.get(i).getOrderID() ;
+                                        String url = "http://192.168.43.211:8085/apply/finishApply?applyID=" + ps.get(i).getApplyID() +"&OrderID=" + ps.get(i).getOrderID() ;
 
                                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
@@ -256,7 +282,7 @@ public class Fragment_apply extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         JSONObject jsonObject=new JSONObject();
-                                        String url = "http://192.168.1.103:8085/apply/cancelApply?applyID=" + ps.get(i).getApplyID();
+                                        String url = "http://192.168.43.211:8085/apply/cancelApply?applyID=" + ps.get(i).getApplyID();
 
                                         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
                                         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {

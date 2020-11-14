@@ -56,7 +56,7 @@ public class EditApplyActivity extends AppCompatActivity {
         t_num=findViewById(R.id.edt_num);
         Btn=findViewById(R.id.btn_tijiao);
 
-        String url = "http://192.168.1.103:8085/apply/applyfindByAID?applyID="+applyid;
+        String url = "http://192.168.43.211:8085/apply/applyfindByAID?applyID="+applyid;
         RequestQueue requestQueue = Volley.newRequestQueue(EditApplyActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -80,7 +80,7 @@ public class EditApplyActivity extends AppCompatActivity {
                             }
                             else {
                                 JSONObject jsonObject=new JSONObject();
-                                String url="http://192.168.1.103:8085/apply/editApply?applyID="+applyid+"&applyPlace="+place1
+                                String url="http://192.168.43.211:8085/apply/editApply?applyID="+applyid+"&applyPlace="+place1
                                         +"&applyAmount="+num1+"&foodName="+name1;
                                 RequestQueue requestQueue= Volley.newRequestQueue(EditApplyActivity.this);
                                 JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {

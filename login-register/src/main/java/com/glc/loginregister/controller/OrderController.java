@@ -50,8 +50,6 @@ public class OrderController {
         Message message=new Message();
         if(integer>=1){
             message.setInfo("修改成功");
-            orderService.updateOrderState();
-            orderService.updateOrderPState(orderID,peopleLimit);
             return message;
         }else {
             message.setInfo("修改失败");

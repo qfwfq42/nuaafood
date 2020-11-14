@@ -74,7 +74,7 @@ public class HistoryApplyActivity extends AppCompatActivity {
     }
 
     private void showOrder(int orderid) {
-        String url = "http://192.168.1.103:8085/order/findOrder?orderID=" + orderid;
+        String url = "http://192.168.43.211:8085/order/findOrder?orderID=" + orderid;
         RequestQueue requestQueue = Volley.newRequestQueue(HistoryApplyActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -104,7 +104,7 @@ public class HistoryApplyActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    String url = "http://192.168.1.103:8085/user/getUserInfo";
+                    String url = "http://192.168.43.211:8085/user/getUserInfo";
                     RequestQueue requestQueue = Volley.newRequestQueue(HistoryApplyActivity.this);
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                         @Override
@@ -146,7 +146,7 @@ public class HistoryApplyActivity extends AppCompatActivity {
     }
 
     private void showApply(int applyid) {
-        String url = "http://192.168.1.103:8085/apply/applyfindByAID?applyID=" + applyid;
+        String url = "http://192.168.43.211:8085/apply/applyfindByAID?applyID=" + applyid;
         RequestQueue requestQueue = Volley.newRequestQueue(HistoryApplyActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override

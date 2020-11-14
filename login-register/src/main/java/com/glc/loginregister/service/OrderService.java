@@ -50,7 +50,10 @@ public class OrderService {
     public Integer updateOrderPState(int id,int num){return orderMapper.updateOrderPState(id,num);}
 
     public Integer agreeapply(int id) {
-        return orderMapper.agreeapply(id);
+        int i = orderMapper.agreeapply(id);
+        int num = orderMapper.countconapply(id);
+        orderMapper.updateOrderPState(id,num);
+        return i;
     }
 
     public Integer rejectapply(int id) {
@@ -62,7 +65,10 @@ public class OrderService {
     }
 
     public Integer editOrder(int orderID,int timeLimit,int peopleLimit) {
-        return orderMapper.editOrder(orderID,timeLimit,peopleLimit);
+        int i= orderMapper.editOrder(orderID,timeLimit,peopleLimit);
+        int num = orderMapper.countconapply(orderID);
+        orderMapper.updateOrderPState(orderID,num);
+        return i;
     }
 
     public Integer cancelOrder(int id) {
@@ -78,10 +84,10 @@ public class OrderService {
     }
 
     public PageBean findOrderByPage(Integer currentPage, int userID,Integer pageSize) {
-        //设置分页信息，分别是当前页数和每页显示的总记录数【记住：必须在mapper接口中的方法执行之前设置该分页信息】
+        //设置分页信息，分别是当前页数和每页显示的总记录数
         PageHelper.startPage(currentPage, pageSize);
 
-        List<Order> allItems = orderMapper.listOrder();        //全部商品
+        List<Order> allItems = orderMapper.listOrder();
         int countNums = orderMapper.countOrder();            //总记录数
         PageBean<Order> pageBean =new PageBean<>();
         pageBean.setItems(allItems);//分页结果

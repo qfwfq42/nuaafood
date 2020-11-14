@@ -76,7 +76,7 @@ public class EditPasswdActivity extends AppCompatActivity{
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        String url = "http://192.168.1.103:8085/user/changePasswd";
+                        String url = "http://192.168.43.211:8085/user/changePasswd";
                         RequestQueue requestQueue = Volley.newRequestQueue(EditPasswdActivity.this);
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                             @Override

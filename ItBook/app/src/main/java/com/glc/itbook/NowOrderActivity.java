@@ -67,7 +67,7 @@ public class NowOrderActivity extends AppCompatActivity {
     }
 
     private void showOrder(int orderid){
-        String url = "http://192.168.1.103:8085/order/orderfindByOID?orderID="+orderid;
+        String url = "http://192.168.43.211:8085/order/orderfindByOID?orderID="+orderid;
         RequestQueue requestQueue = Volley.newRequestQueue(NowOrderActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -105,7 +105,7 @@ public class NowOrderActivity extends AppCompatActivity {
     }
 
     private void showApply(final int orderid){
-        String url = "http://192.168.1.103:8085/order/applyfindByOID?orderID="+orderid;
+        String url = "http://192.168.43.211:8085/order/applyfindByOID?orderID="+orderid;
         RequestQueue requestQueue = Volley.newRequestQueue(NowOrderActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest( url,  new Response.Listener<JSONArray>() {
             @Override
@@ -166,7 +166,7 @@ public class NowOrderActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             JSONObject jsonObject=new JSONObject();
-                                            String url = "http://192.168.1.103:8085/order/agreeapply?applyID=" + ps.get(i).getApplyID() ;
+                                            String url = "http://192.168.43.211:8085/order/agreeapply?applyID=" + ps.get(i).getApplyID() ;
 
                                             RequestQueue requestQueue= Volley.newRequestQueue(NowOrderActivity.this);
                                             JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
@@ -217,7 +217,7 @@ public class NowOrderActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             JSONObject jsonObject=new JSONObject();
-                                            String url = "http://192.168.1.103:8085/order/rejectapply?applyID=" + ps.get(i).getApplyID() ;
+                                            String url = "http://192.168.43.211:8085/order/rejectapply?applyID=" + ps.get(i).getApplyID() ;
 
                                             RequestQueue requestQueue= Volley.newRequestQueue(NowOrderActivity.this);
                                             JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
